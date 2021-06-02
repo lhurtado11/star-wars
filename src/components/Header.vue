@@ -1,18 +1,28 @@
 <template>
-<div >
-    <nav class="navbar navbar-light header-bg">
-    <div class="container-fluid justify-content-space-between header">
-      <a class="navbar-brand" href="#">
-        <img src="@/assets/star-wars.png" alt="" width="80" height="50">
-      </a>
-      <div>
-        <button class="btn btn-outline-danger me-2 neon" type="button"><router-link to="/" class="style-link">Álbum</router-link></button>
-        <button class="btn btn-outline-danger me-2 neon" type="button"><router-link to="/Lamina" class="style-link">Lámina</router-link></button> 
+  <header class="header">
+      <nav class="navbar navbar-light header-bg">
+      <div class="container-fluid justify-content-space-between ">
+        <a class="navbar-brand" href="#">
+          <img src="@/assets/star-wars.png" alt="" width="150" height="50">
+        </a>
+        <div>
+          <button
+            class="btn btn-outline-white me-2 neon"
+            type="button"
+          >
+            <router-link to="/" class="style-link">Álbum</router-link>
+          </button>
+          <button
+            class="btn btn-outline-white me-2 neon"
+            type="button"
+          >
+            <router-link to="/Lamina" class="style-link">Obtener Láminas</router-link>
+          </button> 
+        </div>
       </div>
-    </div>
-    </nav>
-<router-view/>
-</div>
+      </nav>
+  <router-view/>
+  </header>
 </template>
 
 <script>
@@ -22,13 +32,22 @@
 </script>
 
 <style scoped>
+
+  .header {
+    border-bottom: 1px solid white;
+    padding: 15px 30px;  
+    height: 100px;
+    width: 100%;
+    
+  }
+
   .header-bg {
     background: #000000;
   }
 
   .neon{
-    box-shadow: 0 0 15px #f31818;
-    transition: all 0.3s ease 0s;
+    box-shadow: 0 0 15px white;
+    border: 1px solid white;
   }
   
   .neon:hover {
@@ -41,11 +60,11 @@
   }
 
   .style-link:visited {
-    color: #dc3545;
+    color: white;
     text-decoration: none;
   }
 
   .style-link:hover{
-    color: #000000;
+    color: white;
   }
 </style>

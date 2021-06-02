@@ -1,14 +1,15 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
-
 Vue.use(Vuex)
-
 export default new Vuex.Store({
   state: {
     people: [],
     film: [],
     starship: [],
+    peopleAlbum:[...Array(81).keys()],
+    starshipAlbum:[...Array(35).keys()],
+    filmAlbum:[...Array(5).keys()],
     error: ''
   },
   mutations: {
@@ -26,38 +27,37 @@ export default new Vuex.Store({
     }
   },
   actions: {
-    getDataPeople ({commit}, payload) {
+    async getDataPeople ({commit}, payload) {
       const stickers = [];
       for( let i=1; i<=9; i++) {
-        axios.get(`https://swapi.dev/api/people/?page=${i}`).then((response) => {
-          stickers.push(response.data.results);
-        }).catch((error) => {
+        const response = await axios.get(`https://swapi.dev/api/people/?page=${i}`).catch((error) => {
           commit('changeError', error)
         })
+        stickers.push(response.data.results);
       }
-      commit('changePeople', stickers);
+      console.log(stickers.flat())
+      commit('changePeople', stickers.flat());
     },
-    getDataFilm ({commit}, payload) {
+    async getDataFilm ({commit}, payload) {
       const stickers = [];
-        axios.get(`https://swapi.dev/api/films/`).then((response) => {
-          stickers.push(response.data.results);
-        }).catch((error) => {
+        const response = await axios.get(`https://swapi.dev/api/films/`).catch((error) => {
           commit('changeError', error)
         })
-      commit('changeFilm', stickers);
+      stickers.push(response.data.results);
+      console.log(stickers.flat())
+      commit('changeFilm', stickers.flat());
     },
-    getDataStarship ({commit}, payload) {
+    async getDataStarship ({commit}, payload) {
       const stickers = [];
       for( let i=1; i<=4; i++) {
-        axios.get(`https://swapi.dev/api/starships/?page=${i}`).then((response) => {
-          stickers.push(response.data.results);
-        }).catch((error) => {
+        const response = await axios.get(`https://swapi.dev/api/starships/?page=${i}`).catch((error) => {
           commit('changeError', error)
         })
+        stickers.push(response.data.results);
       }
-      commit('changeStarship', stickers);
+      console.log(stickers.flat())
+      commit('changeStarship', stickers.flat());
     },
-
   },
   modules: {
   }
