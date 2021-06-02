@@ -4,27 +4,51 @@ import axios from 'axios'
 Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
+    data: {
     people: [],
     film: [],
     starship: [],
-    peopleAlbum:[...Array(81).keys()],
-    starshipAlbum:[...Array(35).keys()],
-    filmAlbum:[...Array(5).keys()],
+    },
+    dataAlbum: {
+      peopleAlbum:[...Array(82).keys()],
+      starshipAlbum:[...Array(36).keys()],
+      filmAlbum:[...Array(6).keys()],
+    },    
+    discardElement: false,
     error: ''
   },
   mutations: {
-    changePeople (state, newPeople) {
-      state.people = newPeople;
+    changePeople (state, newData) {
+      state.data.people = newData;
     },
-    changeFilm (state, newFilm) {
-      state.film = newFilm;
+    changeFilm (state, newData) {
+      state.data.film = newData;
     },
-    changeStarship (state, newStarship) {
-      state.starship = newStarship;
+    changeStarship (state, newData) {
+      state.data.starship = newData;
     },
     changeError (state, error) {
       state.error = error;
-    }
+    },
+    addAlbum (state, elem) {
+      if(elem.type === 'film'){
+        state.dataAlbum.filmAlbum.splice(elem.num-1,1,elem)
+      } else if (elem.type === 'people') {
+        state.dataAlbum.peopleAlbum.splice(elem.num-1,1,elem)
+      } else {
+        state.dataAlbum.starshipAlbum.splice(elem.num-1,1,elem)
+      } 
+    },
+    discard (state, elem) {
+      if(elem.type === 'film'){
+        state.discardElement = state.dataAlbum.filmAlbum.some(elem)
+      } else if (elem.type === 'people'){
+        state.discardElement = state.dataAlbum.peopleAlbum.some(elem)
+      } else {
+        state.discardElement = state.dataAlbum.starship.some(elem)
+      }
+    },
+
   },
   actions: {
     async getDataPeople ({commit}, payload) {
@@ -57,7 +81,8 @@ export default new Vuex.Store({
       }
       console.log(stickers.flat())
       commit('changeStarship', stickers.flat());
-    },
+    }
+
   },
   modules: {
   }

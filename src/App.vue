@@ -10,11 +10,6 @@ import Album from './components/Album.vue'
 
 export default {
   name: 'App',
-  mounted() {
-    this.$store.dispatch('getDataPeople');
-    this.$store.dispatch('getDataFilm');
-    this.$store.dispatch('getDataStarship');
-  },
   components: {
     Header,
     Album
@@ -29,7 +24,7 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
+  color: white;
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
 

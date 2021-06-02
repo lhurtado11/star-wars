@@ -18,8 +18,8 @@
             <h2>Peliculas</h2>
             <div class="container-category"  >
               <div class="category">
-                <div class="category-album"  v-for="(elem, index) in filmAlbum" :key="index"  >
-                  <h5 >{{elem}}</h5>
+                <div class="category-album"  v-for="(elem, index) in dataAlbum.filmAlbum" :key="index"  >
+                  <h5 >{{elem + 1}}</h5>
                   <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
                   <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
                 </div>
@@ -31,8 +31,8 @@
             <h2>Personajes</h2>
             <div class="container-category">
               <div class="category">
-                <div class="category-album" v-for="(elem, index) in peopleAlbum" :key="index" >
-                  <h5 >{{elem}}</h5>
+                <div class="category-album" v-for="(elem, index) in dataAlbum.peopleAlbum" :key="index" >
+                  <h5>{{elem + 1}}</h5>
                   <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
                   <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
                 </div>
@@ -44,8 +44,8 @@
             <h2>Naves Espaciales</h2>
             <div class="container-category">
               <div class="category" >
-                <div class="category-album" v-for="(elem, index) in starshipAlbum" :key="index" >
-                  <h5 >{{elem}}</h5>
+                <div class="category-album" v-for="(elem, index) in dataAlbum.starshipAlbum" :key="index" >
+                  <h5 >{{elem + 1}}</h5>
                   <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
                   <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
                 </div>
@@ -68,7 +68,7 @@ import { mapState } from 'vuex';
       }
     },    
     computed: {
-      ...mapState(['peopleAlbum', 'filmAlbum', 'starshipAlbum']),  
+      ...mapState(['dataAlbum']),  
     },
     methods: {
       toggleShowFilm () {
