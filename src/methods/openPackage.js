@@ -53,12 +53,12 @@ export function open (value) {
   return folder
 };
 
-// export function discard (dataAlbum, elem) {
-//   if(elem.type === 'film'){
-//     return dataAlbum.filmAlbum.includes(elem.num-1)
-//   } else if (elem.type === 'people'){
-//     return dataAlbum.peopleAlbum.includes(elem.num-1)
-//   } else {
-//     return dataAlbum.starship.includes(elem.num-1)
-//   }
-// };
+export function discard (dataAlbum, elem) {
+  if(elem.type === 'film'){
+    return dataAlbum.filmAlbum.includes(elem.num-1)
+  } else if (elem.type === 'people'){
+    return dataAlbum.peopleAlbum.includes(elem.num-1)
+  } else {
+    return dataAlbum.starship.includes(elem.num-1)
+  }
+};

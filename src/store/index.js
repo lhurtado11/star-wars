@@ -14,9 +14,9 @@ export default new Vuex.Store({
       starshipAlbum:[...Array(36).keys()],
       filmAlbum:[...Array(6).keys()],
     },    
-    discardElement: false,
     error: ''
   },
+
   mutations: {
     changePeople (state, newData) {
       state.data.people = newData;
@@ -38,18 +38,9 @@ export default new Vuex.Store({
       } else {
         state.dataAlbum.starshipAlbum.splice(elem.num-1,1,elem)
       } 
-    },
-    discard (state, elem) {
-      if(elem.type === 'film'){
-        state.discardElement = state.dataAlbum.filmAlbum.some(elem)
-      } else if (elem.type === 'people'){
-        state.discardElement = state.dataAlbum.peopleAlbum.some(elem)
-      } else {
-        state.discardElement = state.dataAlbum.starship.some(elem)
-      }
-    },
-
+    }
   },
+
   actions: {
     async getDataPeople ({commit}, payload) {
       const stickers = [];
@@ -82,8 +73,8 @@ export default new Vuex.Store({
       console.log(stickers.flat())
       commit('changeStarship', stickers.flat());
     }
-
   },
+  
   modules: {
   }
 })
