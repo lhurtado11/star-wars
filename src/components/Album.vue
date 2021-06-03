@@ -13,13 +13,13 @@
       </div>
     </div>
 
-      <div  class="categories contend"  >
+      <div  class="categories"  >
         <div class="container-main" v-show="this.showFilm">            
             <h2>Peliculas</h2>
             <div class="container-category"  >
               <div class="category">
-                <div class="category-album"  v-for="(elem, index) in filmAlbum" :key="index"  >
-                  <h5 >{{elem}}</h5>
+                <div class="category-album"  v-for="(elem, index) in dataAlbum.filmAlbum" :key="index"  >
+                  <h5 >{{elem + 1}}</h5>
                   <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
                   <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
                 </div>
@@ -31,8 +31,8 @@
             <h2>Personajes</h2>
             <div class="container-category">
               <div class="category">
-                <div class="category-album" v-for="(elem, index) in peopleAlbum" :key="index" >
-                  <h5 >{{elem}}</h5>
+                <div class="category-album" v-for="(elem, index) in dataAlbum.peopleAlbum" :key="index" >
+                  <h5>{{elem + 1}}</h5>
                   <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
                   <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
                 </div>
@@ -44,8 +44,8 @@
             <h2>Naves Espaciales</h2>
             <div class="container-category">
               <div class="category" >
-                <div class="category-album" v-for="(elem, index) in starshipAlbum" :key="index" >
-                  <h5 >{{elem}}</h5>
+                <div class="category-album" v-for="(elem, index) in dataAlbum.starshipAlbum" :key="index" >
+                  <h5> {{elem + 1}} </h5>
                   <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
                   <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
                 </div>
@@ -68,7 +68,7 @@ import { mapState } from 'vuex';
       }
     },    
     computed: {
-      ...mapState(['peopleAlbum', 'filmAlbum', 'starshipAlbum']),  
+      ...mapState(['dataAlbum']),  
     },
     methods: {
       toggleShowFilm () {
@@ -133,14 +133,12 @@ import { mapState } from 'vuex';
     color: #000000;
   }
 
-  .contend {
+  .categories {
     width: 90%;
     margin: auto; 
-  }
-
-  .categories {
     margin-bottom: 70%;
   }
+
 
   .categories .container-main {
     padding: 20px;
@@ -163,8 +161,20 @@ import { mapState } from 'vuex';
     padding: 20px 0;
     overflow: auto;
     display: flex;
-    /* overflow: scroll;
-    scroll-behavior: smooth; */
+  }
+
+  .container-category::-webkit-scrollbar {
+    -webkit-appearance: none;
+  }
+
+  .container-category::-webkit-scrollbar:horizontal {
+    width:10px;
+  }
+  .container-category::-webkit-scrollbar-thumb {
+    background-color: #000000;
+    border-radius: 20px;
+    border: 1px solid #f1f2f3;
+    box-shadow: 0 0 10px #f1f2f3;
   }
 
   .categories .container-category .category {
