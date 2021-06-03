@@ -24,32 +24,43 @@
                   v-for="(elem, index) in dataAlbum.filmAlbum" :key="index"
                 >
                   <div class="content-description">
-                    <h4 v-if="elem.info">
+                    <h4 :class="elem.category === 'Especial' ? 'especial-category' : null" v-if="elem.info">
                       {{elem.info.title}}
                     </h4>             
                     <h5 class="num">
                       {{elem.num || elem + 1}}
-                    </h5> 
-                     <div>
-                        <b-button 
-                          b-button id="show-btn" @click="$bvModal.show(index)"
-                          v-show="elem.info"
-                          class="btn btn-outline-light me-2 neon-modal"
-                        >
-                          Detalles
-                        </b-button>
-                        <!-- Modal -->
-                        <b-modal :id="index" title="Detalles Lamina" v-if="elem.num-1 === index ">
-                          <h4  v-if="elem.info">
-                            {{elem.info.title}}
-                          </h4> 
-                          <h5 class="num">
-                            {{elem.num}}
-                          </h5>
-                        </b-modal>
-                        <!-- Modal -->
-                      </div>                              
+                    </h5>
+                    <h5>{{elem.category}}</h5>
                   </div>                  
+                  <div class="sticker-button">
+                    <b-button 
+                      b-button id="show-btn" @click="$bvModal.show(elem.info.title)"
+                      v-show="elem.info"
+                      class="btn btn-outline-light me-2 neon-modal"
+                    >
+                      Detalles
+                    </b-button>
+                    <!-- Modal -->
+                    <b-modal :id="elem.info.title" title="Detalles Lamina" v-if="elem.num-1 === index ">
+                      <h4  v-if="elem.info">
+                        {{elem.info.title}}
+                      </h4> 
+                      <h5>
+                        Lamina N°: {{elem.num}}
+                      </h5>
+                      <ul>
+                        <li> Creado: {{elem.info.created}}</li>
+                        <li> Director: {{elem.info.director}}</li>
+                        <li> Editado: {{elem.info.edited}}</li>
+                        <li> Episodio: {{elem.info.episode_id}}</li>
+                        <li> Productor: {{elem.info.producer}}</li>
+                        <li> Fecha de Lanzamiento: {{elem.info.release_date}}</li>
+                      </ul>
+                      <h4>Star Wars opening crawl: </h4>
+                      <p>{{elem.info.opening_crawl}}</p>
+                    </b-modal>
+                    <!-- Modal -->
+                  </div>                              
                 </div>
               </div>
             </div>
@@ -70,26 +81,38 @@
                     <h5 class="num">
                       {{elem.num || elem + 1}}
                     </h5>
-                    <div>
-                      <b-button
-                        b-button id="show-btn" @click="$bvModal.show(index)"
-                        v-show="elem.info" 
-                        class="btn btn-outline-light me-2 neon-modal" 
-                      >
-                       Detalles
-                      </b-button>
-                      <!-- Modal -->
-                      <b-modal :id="index" title="Detalles Lamina" v-if="elem.num-1 === index">
-                        <h4  v-if="elem.info">
-                          {{elem.info.name}}
-                        </h4> 
-                        <h5 class="num">
-                          {{elem.num}}
-                        </h5>
-                      </b-modal>
-                      <!-- Modal -->
-                    </div>                                         
-                </div>
+                    <h5>{{elem.category}}</h5>
+                  </div>
+                  <div class="sticker-button">
+                    <b-button
+                      b-button id="show-btn" @click="$bvModal.show(elem.info.name)"
+                      v-show="elem.info" 
+                      class="btn btn-outline-light me-2 neon-modal" 
+                    >
+                      Detalles
+                    </b-button>
+                    <!-- Modal -->
+                    <b-modal :id="elem.info.name" title="Detalles Lamina" v-if="elem.num-1 === index">
+                      <h4  v-if="elem.info">
+                        {{elem.info.name}}
+                      </h4> 
+                      <h5>
+                        Lamina N°: {{elem.num}}
+                      </h5>
+                      <ul>
+                        <li> Año de nacimiento: {{elem.info.birth_year}}</li>
+                        <li> Color de ojos: {{elem.info.eye_color}}</li>
+                        <li> Género: {{elem.info.gender}}</li>
+                        <li> Color de cabello: {{elem.info.hair_color}}</li>
+                        <li> Altura: {{elem.info.height}}</li>
+                        <li> Masa: {{elem.info.mass}}</li>
+                        <li> Color de piel: {{elem.info.skin_color}}</li>
+                        <li> Creado: {{elem.info.created}}</li>
+                        <li> Editado: {{elem.info.edited}}</li>
+                      </ul>
+                    </b-modal>
+                    <!-- Modal -->
+                  </div>                                         
                 </div>
               </div>
             </div>
@@ -110,26 +133,43 @@
                     <h5 class="num">
                       {{elem.num || elem + 1}}
                     </h5> 
-                    <div>
-                      <b-button 
-                        b-button id="show-btn" @click="$bvModal.show(index)"
-                        v-show="elem.info" 
-                        class="btn btn-outline-light me-2 neon-modal" 
-                      >
-                        Detalles
-                      </b-button>
-                      <!-- Modal -->
-                      <b-modal :id="index" title="Detalles Lamina" v-if="elem.num-1 === index">
-                        <h4  v-if="elem.info">
-                          {{elem.info.name}}
-                        </h4> 
-                        <h5 class="num">
-                          {{elem.num}}
-                        </h5>
-                      </b-modal>
-                      <!-- Modal -->
-                    </div>           
+                    <h5>{{elem.category}}</h5>
                   </div>
+                  <div class="sticker-button">
+                    <b-button 
+                      b-button id="show-btn" @click="$bvModal.show(elem.info.name)"
+                      v-show="elem.info" 
+                      class="btn btn-outline-light me-2 neon-modal" 
+                    >
+                      Detalles
+                    </b-button>
+                    <!-- Modal -->
+                    <b-modal :id="elem.info.name" title="Detalles Lamina" v-if="elem.num-1 === index">
+                      <h4  v-if="elem.info">
+                        {{elem.info.name}}
+                      </h4> 
+                      <h5>
+                        Lamina N°: {{elem.num}}
+                      </h5>
+
+                      <ul>
+                        <li> Clase de nave estelar: {{starship_class}}</li>
+                        <li> Capacidad: {{elem.info.cargo_capacity}}</li>
+                        <li> Consumibles: {{elem.info.consumables}}</li>
+                        <li> Coste de créditos: {{elem.info.cost_in_credits}}</li>
+                        <li> Creado: {{elem.info.created}}</li>
+                        <li> Tripulación: {{elem.info.crew}}</li>
+                        <li> Editado: {{elem.info.edited}}</li>
+                        <li> Hiperimpulso: {{elem.info.hyperdrive}}</li>
+                        <li> Longitud: {{elem.info.length}}</li>
+                        <li> Fabricante: {{elem.info.manufacturer}}</li>
+                        <li> Velocidad máxima atmosférica: {{elem.info.max_atmosphering_speed}}</li>
+                        <li> Modelo: {{elem.info.model}}</li>
+                        <li> Pasajeros: {{elem.info.passengers}}</li>
+                      </ul>
+                    </b-modal>
+                    <!-- Modal -->
+                  </div>           
                 </div>
               </div>
             </div>
@@ -263,6 +303,7 @@ import { mapState, mapMutations } from 'vuex';
     font-size: 24px;
     border-radius: 16px;
     font-weight: bolder;
+    height: 60px;
   }
 
   .categories .container-sticker {
@@ -336,6 +377,12 @@ import { mapState, mapMutations } from 'vuex';
     -webkit-box-orient: vertical; 
     overflow: hidden; 
     font-weight: bolder;
+  }
+
+  .sticker-button {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
   }
 
 </style>
