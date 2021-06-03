@@ -1,9 +1,10 @@
 <template>
   <div>
     <div class="contain-envelopes">
-      <button @click="toggleShowStickers" v-for="n in envelopes" :key="n" >
+      <button @click="toggleShowStickers" v-for="n in envelopes" :key="n" :disabled="counting" >
         <h3>Abreme</h3>
-        <font-awesome-icon icon="envelope" class="envelopes" ></font-awesome-icon>
+        <h3>{{timeLeft}}</h3>
+                <font-awesome-icon icon="envelope" class="envelopes" ></font-awesome-icon>
         </button>  
     </div>
     <div class="contain-stickers" v-if="showStickers">
@@ -56,16 +57,21 @@ import { discard } from '../methods/openPackage';
     mounted() {
       this.$store.dispatch('getDataPeople');
       this.$store.dispatch('getDataFilm');
-      this.$store.dispatch('getDataStarship')
+      this.$store.dispatch('getDataStarship');
+      setTimeout(function() { alert('Sobres Listos en unos segundos'); }, 1000);
     },
     computed: {
-      ...mapState(['data', 'dataAlbum', 'showStickers', 'envelopes', 'openEnvelopes']),
+      ...mapState(['data', 'dataAlbum', 'showStickers', 'envelopes', 'openEnvelopes', 'counting', 'timeLeft']),
       
     },
     methods: {
-      ...mapMutations(['addAlbum','showEnvelopes', 'envelopesIsOpen', 'openEnvelope']),
+      ...mapMutations(['addAlbum','showEnvelopes', 'envelopesIsOpen', 'openEnvelope', 'startCountdown', 'getTime']),
 
       toggleShowStickers() {
+        this.startCountdown();
+
+        this.getTime();
+
         this.showEnvelopes();
         console.log(this.show)
         this.envelopesIsOpen();

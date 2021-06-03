@@ -23,6 +23,8 @@ export default new Vuex.Store({
     showStickers: true,
     envelopes: 4,
     openEnvelopes: [],
+    counting: false,
+    timeLeft: 60,
   },
 
   mutations: {
@@ -67,7 +69,34 @@ export default new Vuex.Store({
     },
     openEnvelope(state) {
      state.openEnvelopes = open(state.data);
-    }
+    },
+    startCountdown(state) {
+      state.counting = true;
+    },
+    // onCountdownEnd(state) {
+    //   state.counting = false;
+    // },
+    getTime(state){
+      // state.timeInterval = setInterval(() => {
+      //   if(state.timeLeft === 0) {
+      //     state.counting = false;
+      //     alert('puedes abrir otro sobre');
+      //   } else {
+      //     state.timeLeft--;
+      //   }
+      // },1000)
+
+      setTimeout(() => {
+        state.counting = false;
+      }, 60000);
+
+      setInterval(() => {
+        state.timeLeft--;
+        if(state.timeLeft === 0){
+          state.timeLeft = 60
+        }
+      },1000)
+    },
   },
   actions: {
     async getDataPeople ({commit}, payload) {
@@ -76,6 +105,7 @@ export default new Vuex.Store({
         const response = await axios.get(`https://swapi.dev/api/people/?page=${i}`).catch((error) => {
           commit('changeError', error)
         })
+        
         stickers.push(response.data.results);
       }
       commit('changePeople', stickers.flat());
