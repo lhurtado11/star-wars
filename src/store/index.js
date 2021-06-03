@@ -1,7 +1,9 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
+import { open, discard } from '../methods/openPackage';
 Vue.use(Vuex)
+
 export default new Vuex.Store({
   state: {
     data: {
@@ -14,7 +16,13 @@ export default new Vuex.Store({
       starshipAlbum:[...Array(36).keys()],
       filmAlbum:[...Array(6).keys()],
     },    
-    error: ''
+    error: '',
+    showFilm: false,
+    showPeople: false,
+    showStarship: false,
+    showStickers: true,
+    envelopes: 4,
+    openEnvelopes: [],
   },
 
   mutations: {
@@ -38,9 +46,29 @@ export default new Vuex.Store({
       } else {
         state.dataAlbum.starshipAlbum.splice(elem.num-1,1,elem)
       } 
+    },
+    showContainerFilm (state) {
+      state.showFilm = !state.showFilm
+    },
+    showContainerPeople (state) {
+      state.showPeople = !state.showPeople
+    },
+    showContainerStarship (state) {
+      state.showStarship = !state.showStarship
+    },
+    showEnvelopes (state) {
+      state.showStickers = true
+    },
+    envelopesIsOpen(state) {
+      state.envelopes= state.envelopes - 1;
+        if(state.envelopes === 0){
+          state.envelopes = 4;
+        };
+    },
+    openEnvelope(state) {
+     state.openEnvelopes = open(state.data);
     }
   },
-
   actions: {
     async getDataPeople ({commit}, payload) {
       const stickers = [];
@@ -50,7 +78,6 @@ export default new Vuex.Store({
         })
         stickers.push(response.data.results);
       }
-      console.log(stickers.flat())
       commit('changePeople', stickers.flat());
     },
     async getDataFilm ({commit}, payload) {
@@ -58,8 +85,7 @@ export default new Vuex.Store({
         const response = await axios.get(`https://swapi.dev/api/films/`).catch((error) => {
           commit('changeError', error)
         })
-      stickers.push(response.data.results);
-      console.log(stickers.flat())
+      stickers.push(response.data.results);      
       commit('changeFilm', stickers.flat());
     },
     async getDataStarship ({commit}, payload) {
@@ -70,7 +96,6 @@ export default new Vuex.Store({
         })
         stickers.push(response.data.results);
       }
-      console.log(stickers.flat())
       commit('changeStarship', stickers.flat());
     }
   },

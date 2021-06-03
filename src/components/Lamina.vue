@@ -1,6 +1,5 @@
 <template>
   <div>
-    
     <div class="contain-envelopes">
       <button @click="toggleShowStickers" v-for="n in envelopes" :key="n" >
         <h3>Abreme</h3>
@@ -9,8 +8,8 @@
     </div>
     <div class="contain-stickers" v-if="showStickers">
       <div class="container-main" >            
-        <div class="container-category"  >
-          <div class="category">
+        <div class="container-sticker"  >
+          <div class="sticker">
             <div :class="elem.category === 'Especial' ? 'sticker-content especial-sticker' : 'sticker-content'"  v-for="(elem, index) in openEnvelopes" :key="index">
                 <div class="content-description">
                   <h4>
@@ -46,67 +45,59 @@
 
 <script>
 import { mapState, mapMutations } from 'vuex';
-
-
-import { open, discard } from '../methods/openPackage';
+import { discard } from '../methods/openPackage';
   export default {
     name: "Lamina",
     data() {
       return {
-        showStickers: false,
-        envelopes: 4,
-        openEnvelopes: [],
-        repeat: false                     
+        repeat: false,                     
       }
     },
     mounted() {
       this.$store.dispatch('getDataPeople');
       this.$store.dispatch('getDataFilm');
-      this.$store.dispatch('getDataStarship');
+      this.$store.dispatch('getDataStarship')
     },
     computed: {
-      ...mapState(['data', 'dataAlbum']),
+      ...mapState(['data', 'dataAlbum', 'showStickers', 'envelopes', 'openEnvelopes']),
       
     },
     methods: {
-      ...mapMutations(['addAlbum']),
+      ...mapMutations(['addAlbum','showEnvelopes', 'envelopesIsOpen', 'openEnvelope']),
+
       toggleShowStickers() {
-        this.showStickers = true;
-        this.envelopes--;
-        if(this.envelopes === 0){
-          this.envelopes = 4;
-        };
+        this.showEnvelopes();
+        console.log(this.show)
+        this.envelopesIsOpen();
         
         if(this.showStickers){
-          this.openEnvelopes = open(this.data);
-          console.log(this.openEnvelopes)
+          this.openEnvelope();
+          console.log(this.openEnvelope());
         }
       },
       add(elem, index,) {
         this.addAlbum(elem);
-        this.openEnvelopes = this.openEnvelopes.filter((el, i) => i!== index)
+        this.$store.state.openEnvelopes = this.$store.state.openEnvelopes.filter((el, i) => i!== index)
         console.log(this.openEnvelopes);
-        this.discardSticker(elem);
-        
-        console.log('discard',this.discardSticker(elem))
-        
+        // this.discardSticker(elem);
+        // console.log('discard',this.discardSticker(elem))
       },
 
-      discardSticker(elem) {
-        this.repeat = discard(this.dataAlbum,elem);
-      },
+      // discardSticker(elem) {
+      //   this.repeat = discard(this.dataAlbum,elem);
+      //   // console.log(this.repeat)
+      // },
 
       deleteSticker(index) {
-        this.openEnvelopes = this.openEnvelopes.filter((el, i) => i!== index);
+        this.$store.state.openEnvelopes = this.$store.state.openEnvelopes.filter((el, i) => i!== index)
         alert('Sticker eliminado')
       },
-      
-      
     }
   }
 </script>
 
 <style scoped>
+
   .contain-envelopes {
     display: flex;
     align-items: center;
@@ -162,26 +153,26 @@ import { open, discard } from '../methods/openPackage';
     color: white;
   }
 
-  .contain-stickers .container-category {
+  .contain-stickers .container-sticker {
     width:100%;
     padding: 20px 0;
     overflow: auto;
     display: flex;
   }
 
-  .contain-stickers .container-category .category {
+  .contain-stickers .container-sticker .sticker {
     display: flex;
     flex-wrap: nowrap;
   }
 
-  .container-category::-webkit-scrollbar {
+  .container-sticker::-webkit-scrollbar {
     -webkit-appearance: none;
   }
 
-  .container-category::-webkit-scrollbar:horizontal {
+  .container-sticker::-webkit-scrollbar:horizontal {
     width:10px;
   }
-  .container-category::-webkit-scrollbar-thumb {
+  .container-sticker::-webkit-scrollbar-thumb {
     background-color: #000000;
     border-radius: 20px;
     border: 1px solid #f1f2f3;
