@@ -16,12 +16,21 @@
       <div  class="categories"  >
         <div class="container-main" v-show="showFilm">            
             <h2>Peliculas</h2>
-            <div class="container-category"  >
-              <div class="category">
-                <div class="category-album"  v-for="(elem, index) in dataAlbum.filmAlbum" :key="index"  >
-                  <h5 >{{elem.num || elem + 1}}</h5>
-                  <h6 class="card-subtitle mb-2 text-muted">hola</h6>
-                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            <div class="container-sticker"  >
+              <div class="sticker">
+                <div 
+                  :class="elem.category === 'Especial' ? 'sticker-content especial-sticker' : 'sticker-content'" 
+                  v-for="(elem, index) in dataAlbum.filmAlbum" :key="index"
+                >
+                  <div class="content-description">
+                    <h4 v-if="elem.info">
+                      {{elem.info.title}}
+                    </h4>             
+                    <h5 class="num">
+                      {{elem.num || elem + 1}}
+                    </h5>                                                   
+                </div>
+                  
                 </div>
               </div>
             </div>
@@ -29,12 +38,18 @@
       
         <div class="container-main" v-show="showPeople">
             <h2>Personajes</h2>
-            <div class="container-category">
-              <div class="category">
-                <div class="category-album" v-for="(elem, index) in dataAlbum.peopleAlbum" :key="index" >
-                  <h5>{{elem + 1}}</h5>
-                  <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            <div class="container-sticker">
+              <div class="sticker">
+                <div :class="elem.category === 'Especial' ? 'sticker-content especial-sticker' : 'sticker-content'"  v-for="(elem, index) in dataAlbum.peopleAlbum" :key="index" >
+                  <div class="content-description">
+                    <h4 :class="elem.category === 'Especial' ? 'especial-category' : null" v-if="elem.info">
+                      {{elem.info.name}}
+                    </h4>             
+                    <h5 class="num">
+                      {{elem.num || elem + 1}}
+                    </h5>                                   
+                                     
+                </div>
                 </div>
               </div>
             </div>
@@ -42,12 +57,18 @@
        
         <div class="container-main" v-show="showStarship" >
             <h2>Naves Espaciales</h2>
-            <div class="container-category">
-              <div class="category" >
-                <div class="category-album" v-for="(elem, index) in dataAlbum.starshipAlbum" :key="index" >
-                  <h5> {{elem + 1}} </h5>
-                  <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            <div class="container-sticker">
+              <div class="sticker" >
+                <div :class="elem.category === 'Especial' ? 'sticker-content especial-sticker' : 'sticker-content'"  v-for="(elem, index) in dataAlbum.starshipAlbum" :key="index" >
+                  <div class="content-description">
+                    <h4 :class="elem.category === 'Especial' ? 'especial-category' : null" v-if="elem.info">
+                      {{elem.info.name}}
+                    </h4>             
+                    <h5 class="num">
+                      {{elem.num || elem + 1}}
+                    </h5>                                   
+                                     
+                </div>
                 </div>
               </div>
             </div>
@@ -151,34 +172,41 @@ import { mapState, mapMutations } from 'vuex';
     font-size: 14px;
   }
 
-  .categories .container-category {
+  .especial-category {
+    color: #fff;
+    font-size: 24px;
+    border-radius: 16px;
+    font-weight: bolder;
+  }
+
+  .categories .container-sticker {
     width:100%;
     padding: 20px 0;
     overflow: auto;
     display: flex;
   }
 
-  .container-category::-webkit-scrollbar {
+  .container-sticker::-webkit-scrollbar {
     -webkit-appearance: none;
   }
 
-  .container-category::-webkit-scrollbar:horizontal {
+  .container-sticker::-webkit-scrollbar:horizontal {
     width:10px;
   }
-  .container-category::-webkit-scrollbar-thumb {
+  .container-sticker::-webkit-scrollbar-thumb {
     background-color: #000000;
     border-radius: 20px;
     border: 1px solid #f1f2f3;
     box-shadow: 0 0 10px #f1f2f3;
   }
 
-  .categories .container-category .category {
+  .categories .container-sticker .sticker {
     display: flex;
     
     flex-wrap: nowrap;
   }
 
-  .categories .container-category .category .category-album {
+  .sticker-content {
     width: 200px;
     height: 250px;
      padding: 20px;
@@ -187,9 +215,41 @@ import { mapState, mapMutations } from 'vuex';
     margin: 20px;
     transition: all 0.3s ease 0s;
   }
+  .sticker-content:hover {
+    position: relative;
+    transform: scale(1.05);
+  }
+
+  .especial-sticker {
+    background: #26e43030;
+    box-shadow: 0 0 30px #26e430;
+  }
+
+  .num {
+    color: #f3ef18;
+    font-size: 22px;
+  }
 
   .category-album:hover {
     position: relative;
     transform: scale(1.05);
   }
+
+  .content-description {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 160px;
+  }
+
+  .content-description h4 {
+    height: 60px;
+    font-weight: 900;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical; 
+    overflow: hidden; 
+    font-weight: bolder;
+  }
+
 </style>

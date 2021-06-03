@@ -9,8 +9,8 @@
     </div>
     <div class="contain-stickers" v-if="showStickers">
       <div class="container-main" >            
-        <div class="container-category"  >
-          <div class="category">
+        <div class="container-sticker"  >
+          <div class="sticker">
             <div :class="elem.category === 'Especial' ? 'sticker-content especial-sticker' : 'sticker-content'"  v-for="(elem, index) in openEnvelopes" :key="index">
                 <div class="content-description">
                   <h4>
@@ -152,26 +152,26 @@ import { open, discard } from '../methods/openPackage';
     color: white;
   }
 
-  .contain-stickers .container-category {
+  .contain-stickers .container-sticker {
     width:100%;
     padding: 20px 0;
     overflow: auto;
     display: flex;
   }
 
-  .contain-stickers .container-category .category {
+  .contain-stickers .container-sticker .sticker {
     display: flex;
     flex-wrap: nowrap;
   }
 
-  .container-category::-webkit-scrollbar {
+  .container-sticker::-webkit-scrollbar {
     -webkit-appearance: none;
   }
 
-  .container-category::-webkit-scrollbar:horizontal {
+  .container-sticker::-webkit-scrollbar:horizontal {
     width:10px;
   }
-  .container-category::-webkit-scrollbar-thumb {
+  .container-sticker::-webkit-scrollbar-thumb {
     background-color: #000000;
     border-radius: 20px;
     border: 1px solid #f1f2f3;
