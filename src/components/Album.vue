@@ -14,20 +14,20 @@
     </div>
 
       <div  class="categories"  >
-        <div class="container-main" v-show="this.showFilm">            
+        <div class="container-main" v-show="showFilm">            
             <h2>Peliculas</h2>
             <div class="container-category"  >
               <div class="category">
                 <div class="category-album"  v-for="(elem, index) in dataAlbum.filmAlbum" :key="index"  >
-                  <h5 >{{elem + 1}}</h5>
-                  <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+                  <h5 >{{elem.num || elem + 1}}</h5>
+                  <h6 class="card-subtitle mb-2 text-muted">hola</h6>
                   <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
                 </div>
               </div>
             </div>
         </div>
       
-        <div class="container-main" v-show="this.showPeople">
+        <div class="container-main" v-show="showPeople">
             <h2>Personajes</h2>
             <div class="container-category">
               <div class="category">
@@ -40,7 +40,7 @@
             </div>
         </div>
        
-        <div class="container-main" v-show="this.showStarship" >
+        <div class="container-main" v-show="showStarship" >
             <h2>Naves Espaciales</h2>
             <div class="container-category">
               <div class="category" >
@@ -57,31 +57,26 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import { mapState, mapMutations } from 'vuex';
   export default {
     name: "Album",
-    data() {
-      return {
-        showFilm: false,
-        showPeople: false,
-        showStarship: false
-      }
-    },    
+     
     computed: {
-      ...mapState(['dataAlbum']),  
+      ...mapState(['dataAlbum', 'showFilm', 'showPeople', 'showStarship']),  
     },
     methods: {
+      ...mapMutations(['showContainer', 'showContainerFilm', 'showContainerPeople', 'showContainerStarship']),
       toggleShowFilm () {
-      this.showFilm = !this.showFilm;
+        this.showContainerFilm();
       console.log(this.showPeople)
       // this.$emit('change-color',this.showPrices ? 'FF96C8' : '3D3D3D')
       },
       toggleShowPeople () {
-      this.showPeople = !this.showPeople;
+        this.showContainerPeople();
       
       },
       toggleShowStarship () {
-      this.showStarship = !this.showStarship;
+        this.showContainerStarship();
           
       }
 

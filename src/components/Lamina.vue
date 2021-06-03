@@ -46,17 +46,12 @@
 
 <script>
 import { mapState, mapMutations } from 'vuex';
-
-
 import { open, discard } from '../methods/openPackage';
   export default {
     name: "Lamina",
     data() {
       return {
-        showStickers: false,
-        envelopes: 4,
-        openEnvelopes: [],
-        repeat: false                     
+        repeat: false,                     
       }
     },
     mounted() {
@@ -65,31 +60,28 @@ import { open, discard } from '../methods/openPackage';
       this.$store.dispatch('getDataStarship');
     },
     computed: {
-      ...mapState(['data', 'dataAlbum']),
+      ...mapState(['data', 'dataAlbum', 'showStickers', 'envelopes', 'openEnvelopes']),
       
     },
     methods: {
-      ...mapMutations(['addAlbum']),
+      ...mapMutations(['addAlbum','showEnvelopes', 'envelopesIsOpen', 'openEnvelope']),
+
       toggleShowStickers() {
-        this.showStickers = true;
-        this.envelopes--;
-        if(this.envelopes === 0){
-          this.envelopes = 4;
-        };
+        this.showEnvelopes();
+        console.log(this.show)
+        this.envelopesIsOpen();
         
         if(this.showStickers){
-          this.openEnvelopes = open(this.data);
-          console.log(this.openEnvelopes)
+          this.openEnvelope();
+          console.log(this.openEnvelope());
         }
       },
       add(elem, index,) {
         this.addAlbum(elem);
-        this.openEnvelopes = this.openEnvelopes.filter((el, i) => i!== index)
+        this.$store.state.openEnvelopes = this.$store.state.openEnvelopes.filter((el, i) => i!== index)
         console.log(this.openEnvelopes);
         this.discardSticker(elem);
-        
         console.log('discard',this.discardSticker(elem))
-        
       },
 
       discardSticker(elem) {
@@ -97,11 +89,9 @@ import { open, discard } from '../methods/openPackage';
       },
 
       deleteSticker(index) {
-        this.openEnvelopes = this.openEnvelopes.filter((el, i) => i!== index);
+        this.$store.state.openEnvelopes = this.$store.state.openEnvelopes.filter((el, i) => i!== index)
         alert('Sticker eliminado')
       },
-      
-      
     }
   }
 </script>

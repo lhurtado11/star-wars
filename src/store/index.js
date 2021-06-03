@@ -1,7 +1,9 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
+import { open, discard } from '../methods/openPackage';
 Vue.use(Vuex)
+
 export default new Vuex.Store({
   state: {
     data: {
@@ -14,7 +16,13 @@ export default new Vuex.Store({
       starshipAlbum:[...Array(36).keys()],
       filmAlbum:[...Array(6).keys()],
     },    
-    error: ''
+    error: '',
+    showFilm: false,
+    showPeople: false,
+    showStarship: false,
+    showStickers: true,
+    envelopes: 4,
+    openEnvelopes: []
   },
 
   mutations: {
@@ -38,7 +46,29 @@ export default new Vuex.Store({
       } else {
         state.dataAlbum.starshipAlbum.splice(elem.num-1,1,elem)
       } 
+    },
+    showContainerFilm (state) {
+      state.showFilm = !state.showFilm
+    },
+    showContainerPeople (state) {
+      state.showPeople = !state.showPeople
+    },
+    showContainerStarship (state) {
+      state.showStarship = !state.showStarship
+    },
+    showEnvelopes (state) {
+      state.showStickers = true
+    },
+    envelopesIsOpen(state) {
+      state.envelopes= state.envelopes - 1;
+        if(state.envelopes === 0){
+          state.envelopes = 4;
+        };
+    },
+    openEnvelope(state) {
+     state.openEnvelopes = open(state.data);
     }
+
   },
 
   actions: {
