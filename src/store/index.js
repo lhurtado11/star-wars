@@ -22,7 +22,7 @@ export default new Vuex.Store({
     showStarship: false,
     showStickers: true,
     envelopes: 4,
-    openEnvelopes: []
+    openEnvelopes: [],
   },
 
   mutations: {
@@ -68,9 +68,7 @@ export default new Vuex.Store({
     openEnvelope(state) {
      state.openEnvelopes = open(state.data);
     }
-
   },
-
   actions: {
     async getDataPeople ({commit}, payload) {
       const stickers = [];
@@ -80,7 +78,6 @@ export default new Vuex.Store({
         })
         stickers.push(response.data.results);
       }
-      console.log(stickers.flat())
       commit('changePeople', stickers.flat());
     },
     async getDataFilm ({commit}, payload) {
@@ -88,8 +85,7 @@ export default new Vuex.Store({
         const response = await axios.get(`https://swapi.dev/api/films/`).catch((error) => {
           commit('changeError', error)
         })
-      stickers.push(response.data.results);
-      console.log(stickers.flat())
+      stickers.push(response.data.results);      
       commit('changeFilm', stickers.flat());
     },
     async getDataStarship ({commit}, payload) {
@@ -100,7 +96,6 @@ export default new Vuex.Store({
         })
         stickers.push(response.data.results);
       }
-      console.log(stickers.flat())
       commit('changeStarship', stickers.flat());
     }
   },

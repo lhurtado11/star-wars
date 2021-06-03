@@ -1,6 +1,5 @@
 <template>
   <div>
-    
     <div class="contain-envelopes">
       <button @click="toggleShowStickers" v-for="n in envelopes" :key="n" >
         <h3>Abreme</h3>
@@ -46,7 +45,7 @@
 
 <script>
 import { mapState, mapMutations } from 'vuex';
-import { open, discard } from '../methods/openPackage';
+import { discard } from '../methods/openPackage';
   export default {
     name: "Lamina",
     data() {
@@ -57,7 +56,7 @@ import { open, discard } from '../methods/openPackage';
     mounted() {
       this.$store.dispatch('getDataPeople');
       this.$store.dispatch('getDataFilm');
-      this.$store.dispatch('getDataStarship');
+      this.$store.dispatch('getDataStarship')
     },
     computed: {
       ...mapState(['data', 'dataAlbum', 'showStickers', 'envelopes', 'openEnvelopes']),
@@ -80,13 +79,14 @@ import { open, discard } from '../methods/openPackage';
         this.addAlbum(elem);
         this.$store.state.openEnvelopes = this.$store.state.openEnvelopes.filter((el, i) => i!== index)
         console.log(this.openEnvelopes);
-        this.discardSticker(elem);
-        console.log('discard',this.discardSticker(elem))
+        // this.discardSticker(elem);
+        // console.log('discard',this.discardSticker(elem))
       },
 
-      discardSticker(elem) {
-        this.repeat = discard(this.dataAlbum,elem);
-      },
+      // discardSticker(elem) {
+      //   this.repeat = discard(this.dataAlbum,elem);
+      //   // console.log(this.repeat)
+      // },
 
       deleteSticker(index) {
         this.$store.state.openEnvelopes = this.$store.state.openEnvelopes.filter((el, i) => i!== index)
@@ -97,6 +97,7 @@ import { open, discard } from '../methods/openPackage';
 </script>
 
 <style scoped>
+
   .contain-envelopes {
     display: flex;
     align-items: center;

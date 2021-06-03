@@ -1,5 +1,6 @@
 <template>
   <div class="main">
+    
     <h1>Mi Álbum</h1>
     <div class="album-categories">
       <div class="category-people">
@@ -28,9 +29,27 @@
                     </h4>             
                     <h5 class="num">
                       {{elem.num || elem + 1}}
-                    </h5>                                                   
-                </div>
-                  
+                    </h5> 
+                     <div>
+                        <b-button 
+                          b-button id="show-btn" @click="$bvModal.show(index)"
+                          v-show="elem.info"
+                          class="btn btn-outline-light me-2 neon-modal"
+                        >
+                          Detalles
+                        </b-button>
+                        <!-- Modal -->
+                        <b-modal :id="index" title="Detalles Lamina" v-if="elem.num-1 === index ">
+                          <h4  v-if="elem.info">
+                            {{elem.info.title}}
+                          </h4> 
+                          <h5 class="num">
+                            {{elem.num}}
+                          </h5>
+                        </b-modal>
+                        <!-- Modal -->
+                      </div>                              
+                  </div>                  
                 </div>
               </div>
             </div>
@@ -40,15 +59,36 @@
             <h2>Personajes</h2>
             <div class="container-sticker">
               <div class="sticker">
-                <div :class="elem.category === 'Especial' ? 'sticker-content especial-sticker' : 'sticker-content'"  v-for="(elem, index) in dataAlbum.peopleAlbum" :key="index" >
+                <div 
+                  :class="elem.category === 'Especial' ? 'sticker-content especial-sticker' : 'sticker-content'"  
+                  v-for="(elem, index) in dataAlbum.peopleAlbum" :key="index" 
+                >
                   <div class="content-description">
                     <h4 :class="elem.category === 'Especial' ? 'especial-category' : null" v-if="elem.info">
                       {{elem.info.name}}
                     </h4>             
                     <h5 class="num">
                       {{elem.num || elem + 1}}
-                    </h5>                                   
-                                     
+                    </h5>
+                    <div>
+                      <b-button
+                        b-button id="show-btn" @click="$bvModal.show(index)"
+                        v-show="elem.info" 
+                        class="btn btn-outline-light me-2 neon-modal" 
+                      >
+                       Detalles
+                      </b-button>
+                      <!-- Modal -->
+                      <b-modal :id="index" title="Detalles Lamina" v-if="elem.num-1 === index">
+                        <h4  v-if="elem.info">
+                          {{elem.info.name}}
+                        </h4> 
+                        <h5 class="num">
+                          {{elem.num}}
+                        </h5>
+                      </b-modal>
+                      <!-- Modal -->
+                    </div>                                         
                 </div>
                 </div>
               </div>
@@ -59,16 +99,37 @@
             <h2>Naves Espaciales</h2>
             <div class="container-sticker">
               <div class="sticker" >
-                <div :class="elem.category === 'Especial' ? 'sticker-content especial-sticker' : 'sticker-content'"  v-for="(elem, index) in dataAlbum.starshipAlbum" :key="index" >
+                <div 
+                  :class="elem.category === 'Especial' ? 'sticker-content especial-sticker' : 'sticker-content'"  
+                  v-for="(elem, index) in dataAlbum.starshipAlbum" :key="index" 
+                >
                   <div class="content-description">
                     <h4 :class="elem.category === 'Especial' ? 'especial-category' : null" v-if="elem.info">
                       {{elem.info.name}}
                     </h4>             
                     <h5 class="num">
                       {{elem.num || elem + 1}}
-                    </h5>                                   
-                                     
-                </div>
+                    </h5> 
+                    <div>
+                      <b-button 
+                        b-button id="show-btn" @click="$bvModal.show(index)"
+                        v-show="elem.info" 
+                        class="btn btn-outline-light me-2 neon-modal" 
+                      >
+                        Detalles
+                      </b-button>
+                      <!-- Modal -->
+                      <b-modal :id="index" title="Detalles Lamina" v-if="elem.num-1 === index">
+                        <h4  v-if="elem.info">
+                          {{elem.info.name}}
+                        </h4> 
+                        <h5 class="num">
+                          {{elem.num}}
+                        </h5>
+                      </b-modal>
+                      <!-- Modal -->
+                    </div>           
+                  </div>
                 </div>
               </div>
             </div>
@@ -81,24 +142,37 @@
 import { mapState, mapMutations } from 'vuex';
   export default {
     name: "Album",
-     
+    data() {
+      return {
+        dialog: false,
+        modalFilms: true,
+        modalPeople: true,
+        modalStarship: true
+      }
+    },  
     computed: {
       ...mapState(['dataAlbum', 'showFilm', 'showPeople', 'showStarship']),  
     },
     methods: {
-      ...mapMutations(['showContainer', 'showContainerFilm', 'showContainerPeople', 'showContainerStarship']),
+      ...mapMutations([
+        'showContainer',
+        'showContainerFilm',
+        'showContainerPeople',
+        'showContainerStarship'
+      ]),
+
       toggleShowFilm () {
         this.showContainerFilm();
-      console.log(this.showPeople)
-      // this.$emit('change-color',this.showPrices ? 'FF96C8' : '3D3D3D')
       },
       toggleShowPeople () {
         this.showContainerPeople();
       
       },
       toggleShowStarship () {
-        this.showContainerStarship();
-          
+        this.showContainerStarship();  
+      },
+      toggleDialog() {
+        this.dialog = !this.dialog
       }
 
     }
@@ -144,6 +218,18 @@ import { mapState, mapMutations } from 'vuex';
   }
   
   .neon:hover {
+    position: relative;
+    transform: scale(1.05);
+    color: #000000;
+  }
+
+  .neon-modal{
+    box-shadow: 0 0 15px #fff;
+    transition: all 0.3s ease 0s;
+    font-size: 20px;
+  }
+  
+  .neon-modal:hover {
     position: relative;
     transform: scale(1.05);
     color: #000000;
