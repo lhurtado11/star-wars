@@ -30,7 +30,7 @@
                   <button class="btn btn-outline-danger me-2 neon" type="button" @click="add(elem, index)">
                     <font-awesome-icon icon="plus"></font-awesome-icon>
                   </button>                
-                  <button class="btn btn-outline-danger me-2 neon" type="button">
+                  <button class="btn btn-outline-danger me-2 neon" type="button" @click="deleteSticker(index)">
                     <font-awesome-icon icon="trash-alt">Descartar</font-awesome-icon>
                   </button>
                 </div>
@@ -65,7 +65,7 @@ import { open, discard } from '../methods/openPackage';
       this.$store.dispatch('getDataStarship');
     },
     computed: {
-      ...mapState(['data', 'dataAlbum', 'discardElement']),
+      ...mapState(['data', 'dataAlbum']),
       
     },
     methods: {
@@ -86,21 +86,22 @@ import { open, discard } from '../methods/openPackage';
         this.addAlbum(elem);
         this.openEnvelopes = this.openEnvelopes.filter((el, i) => i!== index)
         console.log(this.openEnvelopes);
-        //this.discardSticker(elem);
+        this.discardSticker(elem);
         
-        // console.log(this.discard(elem))
+        console.log('discard',this.discardSticker(elem))
         
       },
 
       discardSticker(elem) {
         this.repeat = discard(this.dataAlbum,elem);
-      }
+      },
 
-
-      // handleOpen() {
-      //   console.log(this.data);
-      // },
-
+      deleteSticker(index) {
+        this.openEnvelopes = this.openEnvelopes.filter((el, i) => i!== index);
+        alert('Sticker eliminado')
+      },
+      
+      
     }
   }
 </script>
