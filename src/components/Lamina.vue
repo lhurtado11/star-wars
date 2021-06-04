@@ -60,17 +60,21 @@ import { discard } from '../methods/openPackage';
       }
     },
     mounted() {
-      this.$store.dispatch('getDataPeople');
-      this.$store.dispatch('getDataFilm');
-      this.$store.dispatch('getDataStarship');
+      if(!this.countQuery) {
+        this.$store.dispatch('getDataPeople');
+        this.$store.dispatch('getDataFilm');
+        this.$store.dispatch('getDataStarship');
+        this.changeCountQuery();
+      }
+      
       //setTimeout(function() { alert('Sobres Listos en unos segundos'); }, 1000);
     },
     computed: {
-      ...mapState(['data', 'dataAlbum', 'showStickers', 'envelopes', 'openEnvelopes', 'counting', 'timeLeft','loading']),
+      ...mapState(['data', 'dataAlbum', 'showStickers', 'envelopes', 'openEnvelopes', 'counting', 'timeLeft','loading','countQuery']),
       
     },
     methods: {
-      ...mapMutations(['addAlbum','showEnvelopes', 'envelopesIsOpen', 'openEnvelope', 'startCountdown', 'getTime']),
+      ...mapMutations(['addAlbum','showEnvelopes', 'envelopesIsOpen', 'openEnvelope', 'startCountdown', 'getTime','changeCountQuery']),
 
       toggleShowStickers() {
         this.startCountdown();

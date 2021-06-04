@@ -26,6 +26,7 @@ export default new Vuex.Store({
     counting: false,
     timeLeft: 60,
     loading: false,
+    countQuery: false,
   },
 
   mutations: {
@@ -35,6 +36,10 @@ export default new Vuex.Store({
 
     finishLoading (state, status) {
       state.loading = status
+    },
+
+    changeCountQuery(state){
+      state.countQuery = true;
     },
 
     changePeople (state, newData) {
