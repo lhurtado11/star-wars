@@ -1,8 +1,12 @@
 <template>
   <div>
-    <div class="contain-envelopes">
+    <div class="text-center my-5" v-show="loading">
+      <b-spinner variant="danger" label="Text Centered"></b-spinner>
+    </div>
+    <div class="contain-envelopes" v-show="!loading">
       <button @click="toggleShowStickers" v-for="n in envelopes" :key="n" :disabled="counting" >
         <h3>Abreme</h3>
+        
         <h3>{{timeLeft}}</h3>
                 <font-awesome-icon icon="envelope" class="envelopes" ></font-awesome-icon>
         </button>  
@@ -38,8 +42,6 @@
           </div>
         </div>
       </div>
-      
-        
     </div>
   </div>
 </template>
@@ -49,6 +51,9 @@ import { mapState, mapMutations } from 'vuex';
 import { discard } from '../methods/openPackage';
   export default {
     name: "Lamina",
+    template: {
+      
+    },
     data() {
       return {
         repeat: false,                     
@@ -58,10 +63,10 @@ import { discard } from '../methods/openPackage';
       this.$store.dispatch('getDataPeople');
       this.$store.dispatch('getDataFilm');
       this.$store.dispatch('getDataStarship');
-      setTimeout(function() { alert('Sobres Listos en unos segundos'); }, 1000);
+      //setTimeout(function() { alert('Sobres Listos en unos segundos'); }, 1000);
     },
     computed: {
-      ...mapState(['data', 'dataAlbum', 'showStickers', 'envelopes', 'openEnvelopes', 'counting', 'timeLeft']),
+      ...mapState(['data', 'dataAlbum', 'showStickers', 'envelopes', 'openEnvelopes', 'counting', 'timeLeft','loading']),
       
     },
     methods: {

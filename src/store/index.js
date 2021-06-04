@@ -25,9 +25,18 @@ export default new Vuex.Store({
     openEnvelopes: [],
     counting: false,
     timeLeft: 60,
+    loading: false,
   },
 
   mutations: {
+    initLoading (state, status) {
+      state.loading = status
+    },
+
+    finishLoading (state, status) {
+      state.loading = status
+    },
+
     changePeople (state, newData) {
       state.data.people = newData;
     },
@@ -73,19 +82,8 @@ export default new Vuex.Store({
     startCountdown(state) {
       state.counting = true;
     },
-    // onCountdownEnd(state) {
-    //   state.counting = false;
-    // },
+    
     getTime(state){
-      // state.timeInterval = setInterval(() => {
-      //   if(state.timeLeft === 0) {
-      //     state.counting = false;
-      //     alert('puedes abrir otro sobre');
-      //   } else {
-      //     state.timeLeft--;
-      //   }
-      // },1000)
-
       setTimeout(() => {
         state.counting = false;
       }, 60000);
@@ -99,18 +97,22 @@ export default new Vuex.Store({
     },
   },
   actions: {
-    async getDataPeople ({commit}, payload) {
+    async getDataPeople ({commit}) {
       const stickers = [];
-      for( let i=1; i<=9; i++) {
-        const response = await axios.get(`https://swapi.dev/api/people/?page=${i}`).catch((error) => {
-          commit('changeError', error)
-        })
-        
-        stickers.push(response.data.results);
+      commit('initLoading', true);
+      try{
+        for( let i=1; i<=9; i++) {
+          const response = await axios.get(`https://swapi.dev/api/people/?page=${i}`).catch((error) => {
+            commit('changeError', error)
+          })
+          stickers.push(response.data.results);
+        }
+        commit('changePeople', stickers.flat());        
+      } finally {
+          commit('finishLoading', false);
       }
-      commit('changePeople', stickers.flat());
     },
-    async getDataFilm ({commit}, payload) {
+    async getDataFilm ({commit}) {
       const stickers = [];
         const response = await axios.get(`https://swapi.dev/api/films/`).catch((error) => {
           commit('changeError', error)
@@ -118,18 +120,17 @@ export default new Vuex.Store({
       stickers.push(response.data.results);      
       commit('changeFilm', stickers.flat());
     },
-    async getDataStarship ({commit}, payload) {
+    async getDataStarship ({commit}) {
       const stickers = [];
-      for( let i=1; i<=4; i++) {
-        const response = await axios.get(`https://swapi.dev/api/starships/?page=${i}`).catch((error) => {
-          commit('changeError', error)
-        })
-        stickers.push(response.data.results);
-      }
-      commit('changeStarship', stickers.flat());
+        for( let i=1; i<=4; i++) {
+          const response = await axios.get(`https://swapi.dev/api/starships/?page=${i}`).catch((error) => {
+            commit('changeError', error)
+          })
+          stickers.push(response.data.results);
+        }
+        commit('changeStarship', stickers.flat());
     }
   },
-  
   modules: {
   }
 })

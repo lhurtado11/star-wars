@@ -2,9 +2,9 @@
   <header class="header">
       <nav class="navbar navbar-light header-bg">
       <div class="container-fluid justify-content-space-between ">
-        <a class="navbar-brand" href="#">
-          <img src="@/assets/star-wars.png" alt="" width="150" height="50">
-        </a>
+        <router-link class="navbar-brand" to="/">
+          <img src="@/assets/star-wars.png" alt="logo star wars" width="150" height="50">
+        </router-link>
         <div>
           <button
             class="btn btn-outline-white me-2 neon"
