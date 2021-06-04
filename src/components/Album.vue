@@ -384,5 +384,4 @@ import { mapState, mapMutations } from 'vuex';
     align-items: flex-end;
     justify-content: center;
   }
-
 </style>
